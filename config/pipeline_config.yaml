@@ -1,0 +1,26 @@
+pipeline:
+  name: "Data Quality & Imputation Pipeline"
+  version: "1.0.0"
+
+detection:
+  missing_threshold: 0.05       # flag cols with >5% missing
+  outlier_method: "iqr"         # iqr | zscore | isolation_forest
+  outlier_threshold: 1.5        # IQR multiplier
+  duplicate_subset: null        # null = all columns
+  cardinality_threshold: 50     # max unique vals for categorical
+
+imputation:
+  numeric_strategy: "knn"       # mean | median | mode | knn | iterative
+  categorical_strategy: "mode"  # mode | constant | knn
+  knn_neighbors: 5
+  constant_fill: "UNKNOWN"
+  iterative_max_iter: 10
+
+validation:
+  schema_check: true
+  range_checks: {}
+  regex_checks: {}
+
+reporting:
+  output_format: "html"         # html | json | both
+  save_reports: true
